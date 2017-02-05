@@ -39,6 +39,13 @@ public class FrmEjerc1 extends javax.swing.JFrame {
         txtPote = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
+
+        jPanel1.setBackground(new java.awt.Color(204, 255, 204));
 
         jLabel2.setText("Base:");
 
@@ -129,6 +136,8 @@ public class FrmEjerc1 extends javax.swing.JFrame {
             obje.setNumeBase(Integer.parseInt(this.txtBase.getText()));
             obje.setNumePote(Integer.parseInt(this.txtPote.getText()));
             JOptionPane.showMessageDialog(this,"La respuesta es: " +obje.getResultado());
+            txtPote.setText("");
+            txtBase.setText("");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
@@ -141,6 +150,11 @@ public class FrmEjerc1 extends javax.swing.JFrame {
     private void txtPoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPoteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPoteActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        FrmPrincipal obje = new FrmPrincipal();
+        obje.setVisible(true);
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments

@@ -6,6 +6,10 @@
 package com.sv.udb.forms;
 
 import com.sun.glass.events.KeyEvent;
+import com.sv.udb.clases.Ejercicio2;
+import java.util.*;
+import javax.swing.*;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -17,9 +21,15 @@ public class FrmEjerc2 extends javax.swing.JFrame {
     /**
      * Creates new form FrmEjerc2
      */
+    private boolean isCant;
+    private Ejercicio2 objeEjer;
+   private List<Ejercicio2> listEjer;
     public FrmEjerc2() {
         initComponents();
            this.setLocationRelativeTo(null);
+           this.txtIngresos.setFocusable(true);
+           this.isCant = true;
+           this.listEjer= new ArrayList<>();
     }
 
     /**
@@ -32,7 +42,6 @@ public class FrmEjerc2 extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
         txtIngresos = new javax.swing.JTextField();
         lblIngreso = new javax.swing.JLabel();
 
@@ -40,14 +49,6 @@ public class FrmEjerc2 extends javax.swing.JFrame {
 
         jPanel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
-        jButton1.setText("Calcular");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        txtIngresos.setText("jTextField1");
         txtIngresos.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtIngresosKeyPressed(evt);
@@ -60,17 +61,13 @@ public class FrmEjerc2 extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(152, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(145, 145, 145))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtIngresos)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lblIngreso)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 238, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -80,9 +77,7 @@ public class FrmEjerc2 extends javax.swing.JFrame {
                 .addComponent(lblIngreso)
                 .addGap(18, 18, 18)
                 .addComponent(txtIngresos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 145, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(26, 26, 26))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -105,21 +100,43 @@ public class FrmEjerc2 extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-                    } catch (Exception e) {
-            //JOptionPane.showMessageDialog(this, e.getMessage());
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void txtIngresosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIngresosKeyPressed
 if (evt.getKeyCode()== KeyEvent.VK_ENTER)
 {
-    JOptionPane.showMessageDialog(this, "Ud.presiono enter");
+    String text = this.txtIngresos.getText();
+    if(text.trim().length()>0)
+    {
+        if(this.isCant)
+        {
+            this.objeEjer= new Ejercicio2();
+            this.objeEjer.setCant(Integer.parseInt(text));
+            this.lblIngreso.setText("Ingrese la denominacion");
+            this.txtIngresos.setText("");
+        
+        }
+        else 
+        {
+            this.objeEjer.setDenoDine(Double.parseDouble(text));
+            this.listEjer.add(this.objeEjer);
+             this.lblIngreso.setText("Ingrese la cantidad: ");
+             this.txtIngresos.setText("");
+        }
+        this.isCant = ! this.isCant;
+        
+    }
+    else
+    {
+    JOptionPane.showMessageDialog(this, "El texto esta vacio");
+    }
 }
 else if (evt.getKeyCode()==KeyEvent.VK_X)
 {
-JOptionPane.showMessageDialog(this, "Ud. presiono x");
+    double tota = 0;
+    for(Ejercicio2 temp: this.listEjer)
+    {
+     tota = tota + (temp.getCant()* temp.getDenoDine());   
+    }
+JOptionPane.showMessageDialog(this, "La respuesta es: "+tota);
 }
 
     }//GEN-LAST:event_txtIngresosKeyPressed
@@ -160,7 +177,6 @@ JOptionPane.showMessageDialog(this, "Ud. presiono x");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblIngreso;
     private javax.swing.JTextField txtIngresos;
